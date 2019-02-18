@@ -1,0 +1,16 @@
+{
+  "name": "datatable",
+  "version": "1.0.0",
+  "description": "Creating table using HTML, tachyons CSS library, Vanilla Javascript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://karagudisuma@bitbucket.org/karagudisuma/datatable.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/karagudisuma/datatable#readme"
+}
