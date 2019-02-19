@@ -65,7 +65,10 @@ function renderTableBody(){
     let tBody = "";
     let i;
     let data = reportData.data;
-    for(i = 0; i < 10; i++){
+    let startIndex = parseInt(indexRowInTable.value);
+    let rowLength = parseInt(numRowsInTable.value);
+    rowLength = ((startIndex + rowLength) < reportDataLength) ? rowLength : (reportDataLength - startIndex + 1);
+    for(i = (startIndex - 1); i < rowLength; i++){
         tBody += `<tr data-row-index=${i}>
                     <td class=" pr3 bb b--black-20 pl2">${data[i][0]}</td>
                     <td class=" pr3 bl bb b--black-20 pl2">${data[i][1]}</td>
@@ -82,7 +85,7 @@ function showError(msg){
 }
 
 function withinArrayLen(inputSize, maxSize){
-    if (inputSize > maxSize){
+    if (parseInt(inputSize) > parseInt(maxSize)){
         showError('Number is exceeding the input data size');
         return false;
     }
@@ -90,7 +93,7 @@ function withinArrayLen(inputSize, maxSize){
 }
 
 function isAllowedLen(inputSize, maxLen){
-    if(inputSize > maxLen){
+    if(parseInt(inputSize) > parseInt(maxLen)){
         showError('Number is exceeding the allowed limit');
         return false;
     }
