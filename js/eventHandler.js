@@ -12,7 +12,7 @@ indexRowInTable.addEventListener("keydown", (event) => {
         let validRange = isAllowedLen(numOfRows, 1000000);
         let validLen = withinArrayLen(numOfRows, reportDataLength);
         if(validLen && validRange){
-
+            renderTableBody();
         }
         else{
             indexRowInTable.value = 1;
@@ -27,7 +27,7 @@ numRowsInTable.addEventListener("keydown", (event) => {
         let validRange = isAllowedLen(numOfRows, 1000);
         let validLen = withinArrayLen(numOfRows, reportDataLength);
         if(validLen && validRange){
-            
+            renderTableBody();
         }
         else{
             numRowsInTable.value = 10;
@@ -42,7 +42,7 @@ totalRowsInArr.addEventListener("keydown", event => {
         let validRange = isAllowedLen(numOfRows, 1000000);
         let validLen = withinArrayLen(numOfRows, reportDataLength);
         if(validLen && validRange){
-            
+            renderTableBody();
         }
         else{
             totalRowsInArr.value = reportDataLength;
@@ -67,7 +67,7 @@ function renderTableBody(){
     let data = reportData.data;
     let startIndex = parseInt(indexRowInTable.value);
     let rowLength = parseInt(numRowsInTable.value);
-    rowLength = ((startIndex + rowLength) < reportDataLength) ? rowLength : (reportDataLength - startIndex + 1);
+    rowLength = ((startIndex + rowLength) < reportDataLength) ? (rowLength + startIndex): (reportDataLength - startIndex + 1);
     for(i = (startIndex - 1); i < rowLength; i++){
         tBody += `<tr data-row-index=${i}>
                     <td class=" pr3 bb b--black-20 pl2">${data[i][0]}</td>
