@@ -11,12 +11,10 @@ indexRowInTable.addEventListener("keydown", (event) => {
         let numOfRows = event.target.value;
         let validRange = isAllowedLen(numOfRows, 1000000);
         let validLen = withinArrayLen(numOfRows, reportDataLength);
-        if(validLen && validRange){
-            renderTableBody();
-        }
-        else{
+        if(!validLen || !validRange){
             indexRowInTable.value = 1;
         }
+        renderTableBody();
     }
 });
 
@@ -26,12 +24,10 @@ numRowsInTable.addEventListener("keydown", (event) => {
         let numOfRows = event.target.value;
         let validRange = isAllowedLen(numOfRows, 1000);
         let validLen = withinArrayLen(numOfRows, reportDataLength);
-        if(validLen && validRange){
-            renderTableBody();
-        }
-        else{
+        if(!validLen || !validRange){
             numRowsInTable.value = 10;
         }
+        renderTableBody();
     }
 });
 
@@ -41,12 +37,10 @@ totalRowsInArr.addEventListener("keydown", event => {
         let numOfRows = event.target.value;
         let validRange = isAllowedLen(numOfRows, 1000000);
         let validLen = withinArrayLen(numOfRows, reportDataLength);
-        if(validLen && validRange){
-            renderTableBody();
-        }
-        else{
+        if(!validLen || !validRange){
             totalRowsInArr.value = reportDataLength;
         }
+        renderTableBody();
     }
 });
 
