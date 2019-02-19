@@ -3,7 +3,17 @@ let tableBodyId = document.getElementById('table-body');
 let numRowsInTable = document.getElementById('numRowsInTable');
 let totalRowsInArr = document.getElementById('totalRowsInArr');
 let indexRowInTable = document.getElementById('indexRowInTable');
+let lastPage = document.getElementById('lastPage');
 let reportDataLength = reportData.data.length;
+
+lastPage.addEventListener("click", event => {
+    let numOfRowsValue = parseInt(numRowsInTable.value);
+    let totalRowsValue = parseInt(totalRowsInArr.value);
+    let rowsLeft = totalRowsValue % numOfRowsValue;
+    let startIndex = (rowsLeft == 0) ? (totalRowsValue - numOfRowsValue + 1) : (totalRowsValue - rowsLeft + 1);
+    indexRowInTable.value = parseInt(startIndex);
+    renderTableBody();
+});
 
 indexRowInTable.addEventListener("keydown", (event) => {
     //On enter press
@@ -59,10 +69,10 @@ function renderTableBody(){
     let tBody = "";
     let i;
     let data = reportData.data;
-    let startIndex = parseInt(indexRowInTable.value);
+    let startIndex = parseInt(indexRowInTable.value) - 1;
     let rowLength = parseInt(numRowsInTable.value);
-    rowLength = ((startIndex + rowLength) < reportDataLength) ? (rowLength + startIndex): (reportDataLength - startIndex + 1);
-    for(i = (startIndex - 1); i < rowLength; i++){
+    rowLength = ((startIndex + rowLength) <= reportDataLength) ? (rowLength + startIndex): reportDataLength;
+    for(i = startIndex; i < rowLength; i++){
         tBody += `<tr data-row-index=${i}>
                     <td class=" pr3 bb b--black-20 pl2">${data[i][0]}</td>
                     <td class=" pr3 bl bb b--black-20 pl2">${data[i][1]}</td>
