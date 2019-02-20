@@ -95,11 +95,11 @@ totalRowsInArr.addEventListener("keydown", event => {
 function renderTableHeader(){
     let cols = reportData.cols;
     let tHeader =   `<tr>
-                        <th class="fw6 bb b--black-20 tl pb1 pr3 bg-white"></th>
-                        <th class="fw6 bb bl b--black-20 tl tc pb1 pr3 bg-white">${cols[1]}</th>
-                        <th class="fw6 bb bl b--black-20 tl tc pb1 pr3 bg-white">${cols[2]}</th>
-                        <th class="fw6 bb bl b--black-20 tl tc pb1 pr3 bg-white">${cols[3]}</th>
-                        <th class="fw6 bb bl b--black-20 tl tc pb1 pr3 bg-white">${cols[4]}</th>
+                        <th class="fw6 bb b--black-20 tl pb1 pr3"></th>
+                        <th class="fw6 bb bl b--black-20 tl tc pb1 pr3">${cols[1]}</th>
+                        <th class="fw6 bb bl b--black-20 tl tc pb1 pr3">${cols[2]}</th>
+                        <th class="fw6 bb bl b--black-20 tl tc pb1 pr3">${cols[3]}</th>
+                        <th class="fw6 bb bl b--black-20 tl tc pb1 pr3">${cols[4]}</th>
                     </tr>`;
     tableHeaderId.innerHTML = tHeader;
 }
@@ -120,7 +120,15 @@ function renderTableBody(){
                     <td class=" pr3 bl bb b--black-20 pl2">${data[i][4]}</td>
                 </tr>`;
     }
-    tableBodyId.innerHTML = tBody
+    tableBodyId.innerHTML = tBody;
+    addActiveClass();
+}
+
+function addActiveClass(){
+    let startIndex = (parseInt(indexRowInTable.value) - 1).toString();
+    let query = `tr[data-row-index="${startIndex}"]`; 
+    let activeRow = (document.querySelector(query));
+    activeRow.classList.add("bg-light-blue");
 }
 
 function showError(msg){
