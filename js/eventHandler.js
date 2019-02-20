@@ -1,10 +1,13 @@
+const MAX_ALLOWED_DATA = 1000000;
+const MAX_ALLOWED_ROWS_PER_PAGE = 1000;
+
 let tableHeaderId = document.getElementById('table-header');
 let tableBodyId = document.getElementById('table-body');
 let numRowsInTable = document.getElementById('numRowsInTable');
 let totalRowsInArr = document.getElementById('totalRowsInArr');
 let indexRowInTable = document.getElementById('indexRowInTable');
 let lastPage = document.getElementById('lastPage');
-let reportDataLength = reportData.data.length;
+
 
 lastPage.addEventListener("click", event => {
     let numOfRowsValue = parseInt(numRowsInTable.value);
@@ -19,7 +22,8 @@ indexRowInTable.addEventListener("keydown", (event) => {
     //On enter press
     if(event.keyCode === 13){
         let numOfRows = event.target.value;
-        let validRange = isAllowedLen(numOfRows, 1000000);
+        let reportDataLength = reportData.data.length;
+        let validRange = isAllowedLen(numOfRows, MAX_ALLOWED_DATA);
         let validLen = withinArrayLen(numOfRows, reportDataLength);
         if(!validLen || !validRange){
             indexRowInTable.value = 1;
@@ -32,7 +36,8 @@ numRowsInTable.addEventListener("keydown", (event) => {
     //On enter press
     if(event.keyCode === 13){
         let numOfRows = event.target.value;
-        let validRange = isAllowedLen(numOfRows, 1000);
+        let reportDataLength = reportData.data.length;
+        let validRange = isAllowedLen(numOfRows, MAX_ALLOWED_ROWS_PER_PAGE);
         let validLen = withinArrayLen(numOfRows, reportDataLength);
         if(!validLen || !validRange){
             numRowsInTable.value = 10;
@@ -45,7 +50,12 @@ totalRowsInArr.addEventListener("keydown", event => {
     //On enter press
     if(event.keyCode === 13){
         let numOfRows = event.target.value;
-        let validRange = isAllowedLen(numOfRows, 1000000);
+        let validRange = isAllowedLen(numOfRows, MAX_ALLOWED_DATA);
+
+        if(validRange)
+            generateData(numOfRows);
+
+        let reportDataLength = reportData.data.length;
         let validLen = withinArrayLen(numOfRows, reportDataLength);
         if(!validLen || !validRange){
             totalRowsInArr.value = reportDataLength;
@@ -71,6 +81,7 @@ function renderTableBody(){
     let data = reportData.data;
     let startIndex = parseInt(indexRowInTable.value) - 1;
     let rowLength = parseInt(numRowsInTable.value);
+    let reportDataLength = reportData.data.length;
     rowLength = ((startIndex + rowLength) <= reportDataLength) ? (rowLength + startIndex): reportDataLength;
     for(i = startIndex; i < rowLength; i++){
         tBody += `<tr data-row-index=${i}>
