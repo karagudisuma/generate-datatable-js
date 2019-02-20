@@ -1,5 +1,6 @@
 const MAX_ALLOWED_DATA = 1000000;
 const MAX_ALLOWED_ROWS_PER_PAGE = 1000;
+const START_OF_ROW = 1;
 
 let tableHeaderId = document.getElementById('table-header');
 let tableBodyId = document.getElementById('table-body');
@@ -7,7 +8,34 @@ let numRowsInTable = document.getElementById('numRowsInTable');
 let totalRowsInArr = document.getElementById('totalRowsInArr');
 let indexRowInTable = document.getElementById('indexRowInTable');
 let lastPage = document.getElementById('lastPage');
+let firstPage = document.getElementById('firstPage');
+let nextPage = document.getElementById('nextPage');
+let prevPage = document.getElementById('prevPage');
 
+prevPage.addEventListener('click', event => {
+    let currentIndexValue = parseInt(indexRowInTable.value);
+    let numRows = parseInt(numRowsInTable.value);
+    let totalArrLen = parseInt(totalRowsInArr.value);
+    let prevIndex = currentIndexValue - numRows;
+    prevIndex = (prevIndex < START_OF_ROW) ? (totalArrLen - numRows + 1) : prevIndex;
+    indexRowInTable.value = prevIndex;
+    renderTableBody();
+});
+
+nextPage.addEventListener('click', event => {
+    let currentIndexValue = parseInt(indexRowInTable.value);
+    let numRows = parseInt(numRowsInTable.value);
+    let totalArrLen = parseInt(totalRowsInArr.value);
+    let nextIndex = currentIndexValue + numRows;
+    let nextIndexVal = (nextIndex <= totalArrLen) ? nextIndex : START_OF_ROW;
+    indexRowInTable.value = nextIndexVal;
+    renderTableBody();
+});
+
+firstPage.addEventListener("click", event => {
+    indexRowInTable.value = START_OF_ROW;
+    renderTableBody();
+});
 
 lastPage.addEventListener("click", event => {
     let numOfRowsValue = parseInt(numRowsInTable.value);
@@ -52,7 +80,7 @@ totalRowsInArr.addEventListener("keydown", event => {
         let numOfRows = event.target.value;
         let validRange = isAllowedLen(numOfRows, MAX_ALLOWED_DATA);
 
-        if(validRange)
+        if(validRange) 
             generateData(numOfRows);
 
         let reportDataLength = reportData.data.length;
@@ -101,7 +129,7 @@ function showError(msg){
 
 function withinArrayLen(inputSize, maxSize){
     if (parseInt(inputSize) > parseInt(maxSize)){
-        showError('Number is exceeding the input data size');
+        showError('Number is exceeding the input data size.');
         return false;
     }
     return true;
@@ -109,7 +137,7 @@ function withinArrayLen(inputSize, maxSize){
 
 function isAllowedLen(inputSize, maxLen){
     if(parseInt(inputSize) > parseInt(maxLen)){
-        showError('Number is exceeding the allowed limit');
+        showError('Number is exceeding the allowed limit.');
         return false;
     }
     return true;
