@@ -16,11 +16,11 @@ let prevLine = document.getElementById('prevLine');
 
 
 prevLine.addEventListener('click', event => {
-    removeActiveClass();
     let currentIndexValue = parseInt(indexRowInTable.value);
     let totalRowsValue = parseInt(totalRowsInArr.value);
     let numOfRows = parseInt(numRowsInTable.value);
     let activeIndex = currentIndexValue - 1;
+    removeActiveClass();
     if(activeIndex <= 0){
         indexRowInTable.value = (totalRowsValue - numOfRows + 1);
         //Show previus page and add active class to last row
@@ -30,16 +30,19 @@ prevLine.addEventListener('click', event => {
         addActiveClass(); 
     } 
     else{
-        let query = `tr[data-row-index="${activeIndex}"]`; 
+        let query = `tr[data-row-index="${activeIndex - 1}"]`; 
         let activeRow = (document.querySelector(query));
         //Is at beginning of page
         if(activeRow === null){
-            indexRowInTable.value = activeIndex;
+            indexRowInTable.value = (activeIndex - numOfRows + 1);
             renderTableBody();
+            removeActiveClass();
+            indexRowInTable.value = activeIndex;
+            addActiveClass();
         }
         else{
             indexRowInTable.value = activeIndex;
-            addActiveClass(); 
+            activeRow.classList.add("bg-light-blue");
         }
     }
 });
@@ -54,7 +57,7 @@ nextLine.addEventListener('click', event => {
         renderTableBody();
     } 
     else{
-        let query = `tr[data-row-index="${activeIndex}"]`; 
+        let query = `tr[data-row-index="${indexRowInTable.value.toString()}"]`; 
         let activeRow = (document.querySelector(query));
         //Is at end of page
         if(activeRow === null){
