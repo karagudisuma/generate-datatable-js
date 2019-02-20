@@ -11,6 +11,39 @@ let lastPage = document.getElementById('lastPage');
 let firstPage = document.getElementById('firstPage');
 let nextPage = document.getElementById('nextPage');
 let prevPage = document.getElementById('prevPage');
+let nextLine = document.getElementById('nextLine');
+let prevLine = document.getElementById('prevLine');
+
+/*
+prevLine.addEventListener('click', event => {
+    removeActiveClass();
+    let currentIndexValue = parseInt(indexRowInTable.value);
+    let totalRowsValue = parseInt(totalRowsInArr.value);
+    let activeIndex = currentIndexValue - 1;
+    if(activeIndex <= 0){
+        indexRowInTable.value = totalRowsValue;
+        renderTableBody();
+    } 
+    else{
+        indexRowInTable.value = activeIndex;
+        addActiveClass(); 
+    }
+});*/
+
+nextLine.addEventListener('click', event => {
+    removeActiveClass();
+    let currentIndexValue = parseInt(indexRowInTable.value);
+    let totalRowsValue = parseInt(totalRowsInArr.value);
+    let activeIndex = currentIndexValue + 1;
+    if(activeIndex > totalRowsValue){
+        indexRowInTable.value = 1;
+        renderTableBody();
+    } 
+    else{
+        indexRowInTable.value = activeIndex;
+        addActiveClass(); 
+    }
+});
 
 prevPage.addEventListener('click', event => {
     let currentIndexValue = parseInt(indexRowInTable.value);
@@ -122,6 +155,13 @@ function renderTableBody(){
     }
     tableBodyId.innerHTML = tBody;
     addActiveClass();
+}
+
+function removeActiveClass(){
+    let startIndex = (parseInt(indexRowInTable.value) - 1).toString();
+    let query = `tr[data-row-index="${startIndex}"]`; 
+    let activeRow = (document.querySelector(query));
+    activeRow.classList.remove("bg-light-blue");
 }
 
 function addActiveClass(){
