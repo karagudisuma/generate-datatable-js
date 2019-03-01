@@ -1,1 +1,1 @@
-Creating table using HTML, tachyons CSS library, Vanilla Javascript.
+Creating table using HTML, tachyons CSS library, Vanilla Javascript.Program can generate data upto 1000000 on the fly and controls for going to next row, previous row, next line, previous line, next page, previous page are given. The number of rows to be displayed and starting row which is displayed are controllable.
